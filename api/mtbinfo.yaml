@@ -1,0 +1,236 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: BoB.MTB_Information.API
+host: schemas.mobileticket.se
+basePath: /api/v1
+schemes:
+  - https
+paths:
+  '/mtbinfo/{issuerSignature}':
+    get:
+      summary: Get MTB information by reference
+      operationId: mtbInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: false
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+        - name: issuerSignature
+          in: path
+          description: MTB issuer signature
+          required: true
+          type: string
+          format: base64url
+      responses:
+        '200':
+          description: MTB found
+          schema:
+            $ref: '#/definitions/mtbInformation'
+        '401':
+          description: unauthorised
+        '404':
+          description: MTB not found
+definitions:
+  mtbInformation:
+    description: MTB Information
+    type: object
+    properties:
+      id:
+        description: Ticket identitier
+        type: string
+      title:
+        description: Ticket title
+        type: string
+      description:
+        description: Ticket description
+        type: string
+      rides:
+        description: Ordered list of planned rides
+        type: array
+        items:
+          $ref: '#/definitions/ride'
+      conditions:
+        description: Production conditions
+        type: array
+        items:
+          type: string
+          example: "Cykel får medföras utan kostnad, dock ej 0600-0900 och 1600-1800"
+      status:
+        description: Ticket status
+        type: string
+        enum:
+          - issued
+          - activated
+          - expired
+          - revoked
+      travellersPerCategory:
+        description: Defines a group of travellers (used mutually exclusively of travellerCategoryIds)
+        $ref: '#/definitions/travellersPerCategory'
+      timeConstraints:
+        description: Bundle time constraints
+        type: object
+        required:
+          - timeOfIssue
+        properties:
+          timeOfIssue:
+            description: Date and time for when bundle was issued
+            type: string
+            format: date-time
+          startOfValidity:
+            description: Date and time for requesting start of validity
+            type: string
+            format: date-time
+          endOfValidity:
+            description: Date and time for requesting end of validity
+            type: string
+            format: date-time
+          relativeValidity:
+            description: Validity period in ISO 8601 duration format)
+            type: string
+          other:
+            description: Other time constraints
+            type: array
+            items:
+              type: string
+              example: "Gäller ej vardagar 0600-0900 samt 1600-1800"
+      spatialConstraints:
+        description: Bundle space constraints
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            areas:
+              $ref: '#/definitions/geoAreas'
+      mtbChildren:
+        description: References to child MTBs
+        type: array
+        items:
+          $ref: '#/definitions/mtbReference'
+
+  travellersPerCategory:
+    description: Information about all travellers
+    type: array
+    items:
+      type: object
+      properties:
+        cat:
+          description: Traveller category
+          type: string
+        cls:
+          description: Class of service
+          type: string
+        tra:
+          description: Number of travellers
+          type: number
+        trs:
+          description: Traveller Identifiers
+          type: array
+          items:
+            type: string
+        sts:
+          description: Seating reservations
+          type: array
+          items:
+            type: string
+
+  geoAreas:
+    type: object
+    description: Geographical areas (union)
+    properties:
+      circles:
+        type: array
+        items:
+          $ref: '#/definitions/circle'
+      polygons:
+        type: array
+        items:
+          $ref: '#/definitions/polygon'
+  circle:
+    description: Geographical circle
+    type: object
+    required:
+      - center
+      - radius
+    properties:
+      center:
+        description: Center of circle
+        $ref: '#/definitions/geoPosition'
+      radius:
+        description: Radius of circle in meters
+        type: number
+        format: double
+  polygon:
+    description: Geographical polygon
+    type: array
+    items:
+      $ref: '#/definitions/geoPosition'
+
+  geoPosition:
+    description: Geopos (WGS84 decimal)
+    type: object
+    required:
+      - lat
+      - long
+    properties:
+      lat:
+        description: Latitude
+        type: number
+        format: double
+      long:
+        description: Longitude
+        type: number
+        format: double
+      alt:
+        description: Altitude
+        type: number
+        format: double
+
+  mtbReference:
+    description: MTB reference
+    type: object
+    required:
+      - pid
+      - issuerSignature
+    properties:
+      pid:
+        description: MTB issuer participant identifier
+        type: integer
+        format: int64
+      issuerSignature:
+        description: MTB issuer signature
+        type: string
+        format: base64url
+
+  ride:
+    type: object
+    properties:
+      boardingPlace:
+        $ref: '#/definitions/place'
+      alightingPlace:
+        $ref: '#/definitions/place'
+      serviceJourneyReference:
+        type: string
+      departureDateTime:
+        type: string
+        format: date-time
+      arrivalDateTime:
+        type: string
+        format: date-time
+  place:
+    type: object
+    properties:
+      stopId:
+        type: string
+      coordinate:
+        $ref: '#/definitions/geoPosition'
