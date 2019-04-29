@@ -1,0 +1,22 @@
+{
+	"id": "19939FEE-7318-4134-956B-4D9F8193322A",
+	"title": "Halland runt 24 timmar",
+	"status": "activated",
+	"travellersPerCategory": [
+		{
+			"cat": "a",
+			"tra": 1
+		}
+	],
+	"timeConstraints": {
+		"timeOfIssue": "2019-04-29T09:25:00+02:00",
+		"startOfValidity": "2019-04-29T09:30:00+02:00",
+		"endOfValidity": "2019-04-30T09:30:00+02:00",
+		"relativeValidity": "PT24H"
+	},
+	"spatialConstraints": [
+		{
+			"name": "Hallands län"
+		}
+	]
+}
