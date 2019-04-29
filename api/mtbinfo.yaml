@@ -47,12 +47,22 @@ definitions:
       id:
         description: Ticket identitier
         type: string
+        example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
       title:
         description: Ticket title
         type: string
+        example: "My fine title"
       description:
         description: Ticket description
         type: string
+        example: >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+          ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
       rides:
         description: Ordered list of planned rides
         type: array
@@ -72,6 +82,7 @@ definitions:
           - activated
           - expired
           - revoked
+        example: "issued"
       travellersPerCategory:
         description: Defines a group of travellers (used mutually exclusively of travellerCategoryIds)
         $ref: '#/definitions/travellersPerCategory'
@@ -85,17 +96,21 @@ definitions:
             description: Date and time for when bundle was issued
             type: string
             format: date-time
+            example: "2018-11-13T20:20:39+00:00"
           startOfValidity:
             description: Date and time for requesting start of validity
             type: string
             format: date-time
+            example: "2018-11-13T20:20:39+00:00"
           endOfValidity:
             description: Date and time for requesting end of validity
             type: string
             format: date-time
+            example: "2018-11-13T20:20:39+00:00"
           relativeValidity:
             description: Validity period in ISO 8601 duration format)
             type: string
+            example: "PT24H"
           other:
             description: Other time constraints
             type: array
@@ -127,12 +142,14 @@ definitions:
         cat:
           description: Traveller category
           type: string
+          example: "a"
         cls:
           description: Class of service
           type: string
         tra:
           description: Number of travellers
           type: number
+          example: 1
         trs:
           description: Traveller Identifiers
           type: array
@@ -232,5 +249,8 @@ definitions:
     properties:
       stopId:
         type: string
+      name:
+        type: string
+        example: "Halmstad C"
       coordinate:
         $ref: '#/definitions/geoPosition'
