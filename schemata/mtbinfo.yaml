@@ -67,15 +67,10 @@ definitions:
               type: string
               example: "Gäller ej vardagar 0600-0900 samt 1600-1800"
       spatialConstraints:
-        description: Bundle space constraints
+        description: Bundle spatial constraints
         type: array
         items:
-          type: object
-          properties:
-            name:
-              type: string
-            areas:
-              $ref: '#/definitions/geoAreas'
+          $ref: '#/definitions/spatialConstraint'
       mtbChildren:
         description: References to child MTBs
         type: array
@@ -198,3 +193,11 @@ definitions:
         type: string
       coordinate:
         $ref: '#/definitions/geoPosition'
+
+  spatialConstraint:
+    type: object
+    properties:
+      name:
+        type: string
+      areas:
+        $ref: '#/definitions/geoAreas'
