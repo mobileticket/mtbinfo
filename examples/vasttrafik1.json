@@ -1,0 +1,50 @@
+{
+	"id": "cc32a287-8c8b-4ebf-8b87-4159f4158754",
+	"title": "Göteborg+",
+	"status": "activated",
+	"conditions": [
+		"Gäller i Ale Södra (Bohus, Surte), Göteborg, Härryda Väst (Mölnlycke, Landvetter), Kungälv tätort, Mölndal, Partille och Öckerö."
+	],
+	"travellersPerCategory": [
+		{
+			"cat": "a",
+			"tra": 1
+		},
+		{
+			"cat": "h",
+			"tra": 2
+		}
+	],
+	"timeConstraints": {
+		"timeOfIssue": "2019-04-29T09:25:00+02:00",
+		"startOfValidity": "2019-04-29T09:30:00+02:00",
+		"endOfValidity": "2019-04-30T09:30:00+02:00",
+		"relativeValidity": "PT72H"
+	},
+	"spatialConstraints": [
+		{
+			"name": "Göteborg"
+		},
+		{
+			"name": "Öckerö"
+		},
+		{
+			"name": "Mölndal"
+		},
+		{
+			"name": "Partille"
+		},
+		{
+			"name": "Ale Södra"
+		},
+		{
+			"name": "Kungälv Tät"
+		},
+		{
+			"name": "Helenedal"
+		},
+		{
+			"name": "Härryda Väst"
+		}
+	]
+}
